@@ -14,8 +14,8 @@ def main():
     parent_path = "./src/static"
     dst_path = "./docs"
     copy_static_to_public(paths, parent_path, dst_path)
-    if not sys.argv[0] == "":
-        basepath = sys.argv[0]
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
     else:
         basepath = "/"
 
@@ -59,8 +59,8 @@ def generate_page(from_path, template_path, dest_path, basepath):
     title = extract_title(markdown_file)
     template_file = template_file.replace("{{ Title }}", title)
     template_file = template_file.replace("{{ Content }}", content)
-    template_file = template_file.replace("href=\"/", f"href=\"{basepath}")
-    template_file = template_file.replace("src=\"/", f"src=\"{basepath}")
+    template_file = template_file.replace('href="/', 'href="' + basepath)
+    template_file = template_file.replace('src="/', 'src="' + basepath)
     if not os.path.exists(os.path.dirname(dest_path)):
         os.mkdir(os.path.dirname(dest_path))
     
